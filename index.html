@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Techranda — الصفحة الرئيسية</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind custom config: brand colors + Cairo font -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandA: '#6D5A8C',  /* primary */
+            brandB: '#B6D3DD',
+            brandC: '#9CD1D8',
+            brandD: '#99BFA3'
+          },
+          fontFamily: {
+            sans: ['Cairo', 'ui-sans-serif', 'system-ui'],
+          },
+          boxShadow: {
+            'soft-lg': '0 10px 30px rgba(17,24,39,0.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Cairo font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    html, body { height: 100%; }
+    body { font-family: Cairo, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+    /* fade-in utility */
+    .fade-init { opacity: 0; transform: translateY(18px); transition: opacity .9s ease, transform .9s ease; }
+    .fade-init.show { opacity: 1; transform: translateY(0); }
+
+    /* mobile menu slide */
+    .mobile-menu { max-height: 0; opacity: 0; transform-origin: top; transition: max-height .45s cubic-bezier(.2,.9,.2,1), opacity .35s ease; overflow: hidden; }
+    .mobile-menu.open { max-height: 600px; opacity: 1; }
+
+    /* hamburger animation */
+    .hamburger { width: 42px; height: 42px; display: inline-flex; align-items:center; justify-content:center; }
+    .hamburger svg { transition: transform .35s ease; }
+    .hamburger.open .line1 { transform: translateY(6px) rotate(-45deg); }
+    .hamburger.open .line2 { opacity: 0; transform: scaleX(.2); }
+    .hamburger.open .line3 { transform: translateY(-6px) rotate(45deg); }
+
+    /* subtle glass navbar blur fallback */
+    .glass { background: rgba(255,255,255,0.85); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+
+    /* premium link hover underline */
+    .nav-link { position: relative; display:inline-block; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 3px; transform: scaleX(0); transform-origin: right; background: linear-gradient(90deg,#6D5A8C,#9CD1D8); border-radius: 3px; transition: transform .28s ease; }
+    .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* keep hero image contained */
+    .hero-illustration { max-width: 720px; width: 100%; height: auto; }
+
+    /* ensure logo placeholder looks clean */
+    .logo-placeholder {
+      min-width: 148px;
+      height: 58px;
+      border-radius: 10px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      padding:.35rem .7rem;
+      background: linear-gradient(180deg, rgba(109,90,140,0.08), rgba(156,209,216,0.03));
+      border: 1px solid rgba(109,90,140,0.08);
+      font-weight:700;
+      color: #3b2c58;
+      letter-spacing: .6px;
+    }
+
+    /* small fine tuning */
+    @media (min-width: 768px) {
+      .nav-links { gap: 0.9rem; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-brandB via-white to-brandC min-h-screen">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass shadow-soft-lg border-b border-white/60">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-20 flex items-center justify-between">
+      
+      <!-- NAV LINKS -->
+      <nav class="hidden md:flex items-center nav-links order-last">
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#1">الرئيسية</a>
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#2">من نحن</a>
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#3">خدماتنا</a>
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#4">انجازاتنا</a>
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#5">معرض الاعمال</a>
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#6">شراكاتنا</a>
+        <a class="nav-link text-base text-brandA font-semibold px-3 py-2 hover:text-brandC transition" href="#7">تواصل معنا</a>
+      </nav>
+
+      <!-- LOGO -->
+      <div class="flex items-center">
+        <img src="logo.png" alt="Techranda Logo" class="h-14 w-auto" />
+      </div>
+
+      <!-- MOBILE HAMBURGER -->
+      <div class="md:hidden">
+        <button id="menuToggle" aria-controls="mobileMenu" aria-expanded="false" class="hamburger p-1 rounded-md focus:outline-none" title="قائمة">
+          <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect class="line1" x="2" y="3" width="24" height="2.5" rx="1.25" fill="#6D5A8C"></rect>
+            <rect class="line2" x="2" y="9.5" width="24" height="2.5" rx="1.25" fill="#6D5A8C"></rect>
+            <rect class="line3" x="2" y="16" width="24" height="2.5" rx="1.25" fill="#6D5A8C"></rect>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="mobile-menu md:hidden bg-white/95 border-t border-brandB/60 shadow-lg">
+    <div class="px-4 pt-4 pb-6 space-y-1">
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#1">الرئيسية</a>
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#2">نبذة عننا</a>
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#3">خدماتنا</a>
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#4">انجازاتنا</a>
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#5">معرض الاعمال</a>
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#6">شراكاتنا وتعاوننا</a>
+      <a class="block py-3 px-3 rounded-lg text-brandA font-semibold hover:bg-brandB/60 transition" href="#7">تواصل معنا</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- HERO -->
+<!-- HERO -->
+<main class="flex-1" id="1">
+  <section id="hero" class="w-full bg-white pt-44 pb-16"> <!-- نزلت أكثر -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+        
+        <!-- LEFT: Text -->
+        <div class="w-full md:w-1/2 fade-init mt-6" id="heroText"> <!-- نزلت النص أكثر -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brandA leading-tight">
+            تِـيـكـرانـدا
+          </h1>
+
+          <p class="mt-6 text-lg sm:text-xl text-gray-700 max-w-xl leading-relaxed">
+            نؤمن بأن <span class="text-brandA font-bold">المستقبل يُبنى بالكفاءات</span>، لذلك تسعى تكــرندا لخلق بيئة تقنية تستثمر في المواهب المحلية، 
+            تساعد على تنمية المجتمع، وتعزز الابتكار والريادة والتحوّل الرقمي في منطقة عسير.
+          </p>
+
+          <div class="mt-10 flex flex-wrap gap-4"> <!-- نزلت الأزرار شوي -->
+            <a href="#7" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold shadow-lg transition transform hover:-translate-y-0.5"
+               style="background: linear-gradient(90deg,#6D5A8C,#9CD1D8);">
+              تواصل معنا
+            </a>
+            <a href="#3" class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-brandA font-semibold border border-brandB transition hover:bg-brandB/50">
+              خدماتنا
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT: Image -->
+        <div class="w-full md:w-1/2 flex justify-center md:justify-start">
+<img src="5967461878307342134.jpg" alt="Techranda Illustration" class="w-full max-w-xl">
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+  <!-- FOOTER (minimal to complete page) -->
+ 
+
+  <!-- SCRIPT: Menu toggle + animations -->
+  <script>
+    // DOM elements
+    const menuBtn = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburger = menuBtn;
+    let isOpen = false;
+
+    menuBtn.addEventListener('click', () => {
+      isOpen = !isOpen;
+      // aria
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      // toggle classes
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.classList.toggle('open', isOpen);
+    });
+
+    // close on resize (desktop)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && isOpen) {
+        isOpen = false;
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // fade-in hero elements on load (text + illustration)
+    window.addEventListener('DOMContentLoaded', () => {
+      // small delay to make it feel premium
+      setTimeout(() => {
+        document.getElementById('heroText').classList.add('show');
+      }, 140);
+      setTimeout(() => {
+        document.getElementById('heroIllustration').classList.add('show');
+      }, 260);
+    });
+
+    // Progressive reveal by toggling the class that .fade-init listens to
+    // (we mark them show by adding class .show which is styled in CSS with opacity and transform)
+    document.querySelectorAll('.fade-init').forEach(el => {
+      // rename .show to .fade-init.show effect
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
+
+
+
+<section class="relative py-28 bg-white" id="2">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+  <!-- عنوان النص -->
+  <h2 class="text-5xl font-extrabold text-brandA mb-6 tracking-tight">من نحن</h2>
+  <p class="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto mb-4">
+    <span class="font-semibold text-brandA">تِـيـكـرانـدا</span> هي بيئة تقنية مبتكرة، انطلقت لتجمع بين الإبداع والريادة، وتمكين الكفاءات المحلية في مجال التقنية والتحول الرقمي
+  </p>
+
+  <!-- خط زخرفي أنيق -->
+  <div class="flex justify-center">
+  <span class="inline-block w-48 h-1 bg-gradient-to-r from-brandA via-brandB to-brandC rounded-full"></span>
+</div>
+
+</div>
+
+
+  <!-- بطاقات القيم -->
+  <div class="max-w-6xl mx-auto mt-20 grid md:grid-cols-3 gap-10 px-6">
+  <!-- بطاقة 1 - رؤيتنا -->
+  <div class="bg-gradient-to-tr from-brandB/20 to-brandC/20 backdrop-blur-md rounded-3xl p-8 shadow-xl hover:scale-105 transition-transform duration-500 relative overflow-hidden">
+    <div class="absolute -top-5 -left-5 w-16 h-16 bg-brandA/30 rounded-full"></div>
+    <div class="flex items-center justify-center w-16 h-16 bg-brandA/80 rounded-full mb-4 mx-auto">
+      <!-- أيقونة عين -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-extrabold text-gray-900 mb-2">رؤيتنا</h3>
+    <p class="text-gray-700 text-lg">أن نكون المحرك الأساسي للتحول الرقمي والابتكار في المنطقة.</p>
+  </div>
+
+  <!-- بطاقة 2 - رسالتنا -->
+  <div class="bg-gradient-to-tr from-brandC/20 to-brandB/20 backdrop-blur-md rounded-3xl p-8 shadow-xl hover:scale-105 transition-transform duration-500 relative overflow-hidden">
+    <div class="absolute -top-5 -left-5 w-16 h-16 bg-brandB/30 rounded-full"></div>
+    <div class="flex items-center justify-center w-16 h-16 bg-brandB/80 rounded-full mb-4 mx-auto">
+      <!-- أيقونة رسالة/هدف -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-extrabold text-gray-900 mb-2">رسالتنا</h3>
+    <p class="text-gray-700 text-lg">تمكين الكفاءات، دعم المجتمع، وصناعة حلول تقنية مستدامة.</p>
+  </div>
+
+  <!-- بطاقة 3 - قيمنا -->
+  <div class="bg-gradient-to-tr from-brandA/20 to-brandC/20 backdrop-blur-md rounded-3xl p-8 shadow-xl hover:scale-105 transition-transform duration-500 relative overflow-hidden">
+    <div class="absolute -top-5 -left-5 w-16 h-16 bg-brandC/30 rounded-full"></div>
+    <div class="flex items-center justify-center w-16 h-16 bg-brandC/80 rounded-full mb-4 mx-auto">
+      <!-- أيقونة قلب -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-extrabold text-gray-900 mb-2">قيمنا</h3>
+    <p class="text-gray-700 text-lg">الإبداع، الشفافية، التعاون، والاستدامة في كل ما نقوم به.</p>
+  </div>
+</div>
+
+</section>
+
+
+
+
+<section class="relative py-32 bg-white flex items-center justify-center min-h-screen" id="3">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <!-- العنوان -->
+    <h2 class="text-5xl font-extrabold text-brandA mb-6 tracking-tight">خدماتنا</h2>
+
+    <!-- خط تصميم تحت العنوان -->
+   
+    <div class="flex justify-center mb-10">
+      <span class="inline-block w-48 h-1 bg-gradient-to-r from-brandA via-brandB to-brandC rounded-full"></span>
+    </div>
+    
+
+    <p class="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto mb-20">
+      نقدم مجموعة متكاملة من الخدمات التقنية الاحترافية لدعم الابتكار، تطوير الكفاءات، والتحول الرقمي.
+    </p>
+
+    <!-- شبكة الخدمات -->
+    <div class="grid md:grid-cols-3 gap-12">
+
+      <!-- معسكرات -->
+      <div class="group relative bg-white rounded-3xl p-10 shadow-2xl border border-gray-100 hover:scale-105 transition-transform duration-500 cursor-pointer">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gradient-to-tr from-brandA to-brandC flex items-center justify-center mb-6 shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+          <!-- أيقونة معسكر/تعليم -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l-9-5 9-5 9 5-9 5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7m0 0l-6-3m6 3l6-3" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-3">معسكرات احترافية</h3>
+        <p class="text-gray-700 text-base leading-relaxed">برامج مكثفة لتطوير المهارات التقنية بشكل احترافي ومتكامل.</p>
+      </div>
+
+      <!-- دورات -->
+      <div class="group relative bg-white rounded-3xl p-10 shadow-2xl border border-gray-100 hover:scale-105 transition-transform duration-500 cursor-pointer">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gradient-to-tr from-brandB to-brandA flex items-center justify-center mb-6 shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+          <!-- أيقونة كتاب/تعليم -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6l-6 2v10l6-2 6 2V8l-6-2z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-3">دورات تدريبية متخصصة</h3>
+        <p class="text-gray-700 text-base leading-relaxed">تأهيل الكفاءات التقنية حسب احتياجات السوق ومتطلبات الشركات.</p>
+      </div>
+
+      <!-- لقاءات -->
+      <div class="group relative bg-white rounded-3xl p-10 shadow-2xl border border-gray-100 hover:scale-105 transition-transform duration-500 cursor-pointer">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gradient-to-tr from-brandC to-brandB flex items-center justify-center mb-6 shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+          <!-- أيقونة أشخاص/لقاء -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V10H2v10h5m10 0V10m0 10v-6m-10 6v-6" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-3">لقاءات تقنية</h3>
+        <p class="text-gray-700 text-base leading-relaxed">ملتقيات حية تجمع بين المحترفين والمبتدئين لتبادل الخبرات.</p>
+      </div>
+
+      <!-- حلول للشركات -->
+      <div class="group relative bg-white rounded-3xl p-10 shadow-2xl border border-gray-100 hover:scale-105 transition-transform duration-500 cursor-pointer">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gradient-to-tr from-brandA to-brandB flex items-center justify-center mb-6 shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+          <!-- أيقونة تكنولوجيا/شركات -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m-3-8h6M3 8h6v12H3z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-3">حلول تقنية للشركات</h3>
+        <p class="text-gray-700 text-base leading-relaxed">تقديم حلول برمجية وتقنية مبتكرة لدعم أعمال الشركات.</p>
+      </div>
+
+      <!-- مسابقات -->
+      <div class="group relative bg-white rounded-3xl p-10 shadow-2xl border border-gray-100 hover:scale-105 transition-transform duration-500 cursor-pointer">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gradient-to-tr from-brandB to-brandC flex items-center justify-center mb-6 shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+          <!-- أيقونة كأس/مسابقة -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8m-4-4v4m6-16a6 6 0 01-12 0H4a8 8 0 0016 0h-2z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-3">مسابقات وهاكاثونات</h3>
+        <p class="text-gray-700 text-base leading-relaxed">فعاليات تحفيزية لتطوير الابتكار وتشجيع المنافسة.</p>
+      </div>
+
+      <!-- التحول الرقمي -->
+      <div class="group relative bg-white rounded-3xl p-10 shadow-2xl border border-gray-100 hover:scale-105 transition-transform duration-500 cursor-pointer">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gradient-to-tr from-brandC to-brandA flex items-center justify-center mb-6 shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+          <!-- أيقونة سحابة/تحول رقمي -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 17.58A5 5 0 0018 9h-1.26A8 8 0 104 16.25" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-3">خدمات التحول الرقمي</h3>
+        <p class="text-gray-700 text-base leading-relaxed">مساعدة المؤسسات على الانتقال إلى بيئة رقمية مبتكرة وفعالة.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="relative py-32 bg-white overflow-hidden" id="4">
+  <div class="absolute inset-0">
+    <div class="w-[600px] h-[600px] bg-gradient-to-tr from-brandA/20 to-brandB/20 rounded-full absolute -top-32 -left-32 animate-pulse-slow"></div>
+    <div class="w-[500px] h-[500px] bg-gradient-to-bl from-brandC/20 to-brandA/20 rounded-full absolute -bottom-32 -right-32 animate-pulse-slow"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-6xl font-extrabold text-brandA mb-24 relative inline-block
+               after:content-[''] after:block after:w-40 after:h-1.5 after:bg-gradient-to-r after:from-brandA after:to-brandB after:mx-auto after:mt-8 after:rounded-full">
+      إنجازاتنا
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandA counter glow" data-target="1500">0+</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">قاعدة المستخدمين : أكثر من 1500 مستفيد</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandB counter glow" data-target="900">0</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">المسجلون في الورش : 900 شخص</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandC counter glow" data-target="300">0</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">عدد المستفيدين فعلياً من الورش : 300 شخص</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandA counter glow" data-target="6">0+</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">عدد الورش المقامة : أكثر من 6 ورش تستهدف الناشئين والشباب</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandB counter glow" data-target="3">0</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">عدد التحديات التقنية : 3 تحديات شارك فيها أكثر من 150 مشارك</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandC counter glow" data-target="5">0+</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">عدد المقالات : أكثر من 5 مقالات متخصصة</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandA counter glow" data-target="2">0</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">الهاكثونات التي تمت رعايتها : هاكثونان</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandB counter glow" data-target="1">0</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">الهاكثونات التي فزنا بها : فوز في هاكثون واحد</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandC counter glow" data-target="5">0</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">عدد الحملات التي كنا شركاء فيها : 5 حملات إعلامية</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="text-6xl font-extrabold text-brandA counter glow" data-target="6">0+</div>
+      <p class="mt-4 text-gray-700 font-medium text-center">مشاركتنا في مبادرة أجاويد : تنظيم 6 مبادرات ضمن الحملة</p>
+    </div>
+  </div>
+
+  <style>
+    .glow {
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.4),
+                   0 0 25px rgba(0,0,0,0.1),
+                   0 0 35px rgba(0,0,0,0.05);
+    }
+
+    @keyframes pulse-slow {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+  </style>
+
+  <script>
+    const counters = document.querySelectorAll('.counter');
+
+    const options = { root: null, threshold: 0.5 };
+
+    const animateCounter = (counter) => {
+      const target = +counter.getAttribute('data-target');
+      let count = 0;
+      const increment = target / 200;
+
+      const update = () => {
+        count += increment;
+        if(count < target){
+          if(counter.textContent.includes('+')) {
+            counter.textContent = Math.ceil(count) + '+';
+          } else {
+            counter.textContent = Math.ceil(count);
+          }
+          requestAnimationFrame(update);
+        } else {
+          if(counter.textContent.includes('+')) {
+            counter.textContent = target + '+';
+          } else {
+            counter.textContent = target;
+          }
+        }
+      };
+      update();
+    }
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    counters.forEach(counter => observer.observe(counter));
+  </script>
+</section>
+
+<section class="py-32 bg-white" id="5">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-5xl font-extrabold text-brandA mb-16 relative inline-block
+               after:content-[''] after:block after:w-40 after:h-1.5 after:bg-gradient-to-r after:from-brandA after:to-brandB after:mx-auto after:mt-6 after:rounded-full">
+      معرض أعمالنا
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- بطاقة Flip 1 -->
+      <div class="group perspective">
+        <div class="relative w-full h-80 rounded-3xl shadow-2xl transform-style preserve-3d transition-transform duration-700 card-inner">
+          <div class="absolute inset-0 backface-hidden rounded-3xl overflow-hidden">
+            <img src="one.jpg" alt="إنجاز 1" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-brandB/90 text-white flex items-center justify-center rounded-3xl backface-hidden rotate-y-180 p-6">
+            <p class="text-lg md:text-xl font-bold">تقديمنا وفوزنا بالمركز الثاني في هاكاثون المبادرات الشابية في غرفه ابها</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة Flip 2 -->
+      <div class="group perspective">
+        <div class="relative w-full h-80 rounded-3xl shadow-2xl transform-style preserve-3d transition-transform duration-700 card-inner">
+          <div class="absolute inset-0 backface-hidden rounded-3xl overflow-hidden">
+            <img src="two.jpg" alt="إنجاز 2" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-brandB/90 text-white flex items-center justify-center rounded-3xl backface-hidden rotate-y-180 p-6">
+            <p class="text-lg md:text-xl font-bold">عرض لـ ابرز خدماتنا ومنتجاتنا في جامعة الملك خالد للطلاب والطالبات</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة Flip 3 -->
+      <div class="group perspective">
+        <div class="relative w-full h-80 rounded-3xl shadow-2xl transform-style preserve-3d transition-transform duration-700 card-inner">
+          <div class="absolute inset-0 backface-hidden rounded-3xl overflow-hidden">
+            <img src="three.jpg" alt="إنجاز 3" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-brandC/90 text-white flex items-center justify-center rounded-3xl backface-hidden rotate-y-180 p-6">
+            <p class="text-lg md:text-xl font-bold">وجودنا كشريك نجاح لعدة حملات اعلامية في جامعة الملك خالد</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .perspective {
+      perspective: 1000px;
+    }
+    .card-inner {
+      transform-style: preserve-3d;
+    }
+    .group:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+  </style>
+</section>
+
+
+
+
+<section class="py-24 bg-white" id="6">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-5xl font-extrabold text-brandA mb-12 relative inline-block
+               after:content-[''] after:block after:w-40 after:h-1.5 after:bg-gradient-to-r after:from-brandA after:to-brandB after:mx-auto after:mt-6 after:rounded-full">
+      شراكاتنا
+    </h2>
+
+    <div class="overflow-hidden relative">
+      <div class="marquee-wrapper">
+        <div class="marquee-content">
+          <img src="Partnersships/kku.JPG" alt="جامعة الملك خالد" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/asir.JPG" alt="هيئة تطوير منطقة عسير" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/ine.PNG" alt="شركة INE" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/comptia.JPG" alt="شركة CompTIA" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/microsoft.JPG" alt="شركة Microsoft" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/google.PNG" alt="شركة Google" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/edu.JPG" alt="وزارة التعليم" class="h-16 sm:h-20 mx-4 sm:mx-8">
+
+          <!-- تكرار لضمان الاستمرارية -->
+          <img src="Partnersships/kku.JPG" alt="جامعة الملك خالد" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/asir.JPG" alt="هيئة تطوير منطقة عسير" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/ine.PNG" alt="شركة INE" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/comptia.JPG" alt="شركة CompTIA" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/microsoft.JPG" alt="شركة Microsoft" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/google.PNG" alt="شركة Google" class="h-16 sm:h-20 mx-4 sm:mx-8">
+          <img src="Partnersships/edu.JPG" alt="وزارة التعليم" class="h-16 sm:h-20 mx-4 sm:mx-8">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .marquee-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .marquee-content {
+      display: flex; /* بدل inline-flex */
+      width: max-content;
+      animation: marquee 20s linear infinite;
+    }
+
+    .marquee-content img {
+      display: block;
+      flex-shrink: 0;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* تحسين للهواتف */
+    @media (max-width: 640px) {
+      .marquee-content {
+        animation: marquee 25s linear infinite;
+      }
+    }
+  </style>
+</section>
+
+
+<section class="relative py-32 bg-white" id="7">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-5xl font-extrabold text-brandA mb-16 relative inline-block
+               after:content-[''] after:block after:w-40 after:h-1.5 after:bg-gradient-to-r after:from-brandA after:to-brandB after:mx-auto after:mt-6 after:rounded-full">
+      تواصل معنا
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center">
+      <!-- إيميل -->
+      <a href="mailto:info@example.com" class="flex flex-col items-center gap-4 bg-white/50 backdrop-blur-md rounded-3xl p-6 shadow-2xl hover:scale-110 transition-transform duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brandA" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 0a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+        </svg>
+        <span class="text-lg font-bold text-gray-700">techrandax@gmail.com</span>
+      </a>
+
+      <!-- واتس -->
+      <a href="https://wa.me/966123456789" target="_blank" class="flex flex-col items-center gap-4 bg-white/50 backdrop-blur-md rounded-3xl p-6 shadow-2xl hover:scale-110 transition-transform duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brandA" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.868-2.03-.968-.273-.1-.472-.149-.672.15-.198.297-.768.968-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.786-1.48-1.754-1.653-2.05-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.149-.672-1.611-.92-2.207-.242-.579-.487-.5-.672-.51l-.573-.01c-.198 0-.521.074-.794.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.26.489 1.69.625.711.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.412.248-.694.248-1.29.173-1.412-.074-.123-.273-.198-.57-.347z"/>
+        </svg>
+        <span class="text-lg font-bold text-gray-700 text-left" dir="ltr">+966 54 409 6976</span>
+      </a>
+
+      <!-- تويتر -->
+      <a href="https://twitter.com/youraccount" target="_blank" class="flex flex-col items-center gap-4 bg-white/50 backdrop-blur-md rounded-3xl p-6 shadow-2xl hover:scale-110 transition-transform duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brandA" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 4.557a9.834 9.834 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.555-2.005.959-3.127 1.184a4.916 4.916 0 0 0-8.384 4.482c-4.083-.205-7.702-2.158-10.126-5.134a4.822 4.822 0 0 0-.664 2.475c0 1.708.87 3.215 2.188 4.099a4.904 4.904 0 0 1-2.228-.616c-.054 2.385 1.693 4.623 4.179 5.119a4.935 4.935 0 0 1-2.224.085c.626 1.956 2.444 3.379 4.6 3.419a9.868 9.868 0 0 1-6.102 2.104c-.396 0-.788-.023-1.175-.069a13.945 13.945 0 0 0 7.557 2.212c9.054 0 14.002-7.496 14.002-13.986 0-.213-.005-.425-.014-.636A9.936 9.936 0 0 0 24 4.557z"/>
+        </svg>
+        <span class="text-lg font-bold text-gray-700 text-left" dir="ltr">@Techranda</span>
+      </a>
+
+      <!-- لينكدإن -->
+      <a href="https://linkedin.com/company/yourcompany" target="_blank" class="flex flex-col items-center gap-4 bg-white/50 backdrop-blur-md rounded-3xl p-6 shadow-2xl hover:scale-110 transition-transform duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brandA" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.866-3.063-1.868 0-2.154 1.46-2.154 2.968v5.699h-3v-10h2.879v1.367h.041c.401-.76 1.379-1.562 2.841-1.562 3.039 0 3.601 2.001 3.601 4.604v5.591z"/>
+        </svg>
+        <span class="text-lg font-bold text-gray-700 text-left" dir="ltr">@Techranda</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<footer class="bg-white/95 backdrop-blur-md shadow-lg py-8">
+  <div class="max-w-7xl mx-auto px-6 text-center" dir="ltr">
+    <p class="text-brandA text-lg">
+      © 2025 جميع الحقوق محفوظة لـ <span class="font-semibold">تِـيـكـراندا</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    transition: all 0.3s ease-in-out;
+  }
+
+  footer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+</style>
